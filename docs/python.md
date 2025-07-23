@@ -68,3 +68,33 @@ uv 0.8.2 (21fadbcc1 2025-07-22)
 [araki@gmk ~]$ which uv
 /usr/bin/which: no uv in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib)
 ```
+
+- https://github.com/astral-sh/uv?tab=readme-ov-file#installation
+
+
+## RHEL10
+
+```bash
+araki@localhost:~/work$ which python
+/usr/bin/python
+araki@localhost:~/work$ python --version
+Python 3.12.9
+araki@localhost:~/work$ which uv
+/usr/bin/which: no uv in (/home/araki/.local/bin:/home/araki/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin)
+```
+
+- https://github.com/astral-sh/uv?tab=readme-ov-file#installation
+
+```bash
+araki@localhost:~/work$ curl -LsSf https://astral.sh/uv/install.sh | sh
+downloading uv 0.8.2 x86_64-unknown-linux-gnu
+no checksums to verify
+installing to /home/araki/.local/bin
+  uv
+  uvx
+everything's installed!
+araki@localhost:~/work$ which uv
+~/.local/bin/uv
+araki@localhost:~/work$ uv --version
+uv 0.8.2
+```
