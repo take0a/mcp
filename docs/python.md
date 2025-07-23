@@ -62,15 +62,18 @@ uv 0.8.2 (21fadbcc1 2025-07-22)
 
 ## WSL
 
+- RHEL10 で ~/.local/bin にインストールされ、~/.bashrc の共有により、PATH も共有されているため
+
 ```bash
-[araki@gmk ~]$ which python
-/usr/bin/which: no python in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib)
-[araki@gmk ~]$ which uv
-/usr/bin/which: no uv in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib)
+[araki@gmk work]$ which python3
+/usr/bin/python3
+[araki@gmk work]$ python3 --version
+Python 3.12.9
+[araki@gmk work]$ which uv
+~/.local/bin/uv
+[araki@gmk work]$ uv --version
+uv 0.8.2
 ```
-
-- https://github.com/astral-sh/uv?tab=readme-ov-file#installation
-
 
 ## RHEL10
 
