@@ -59,3 +59,12 @@ $ which uv
 $ uv --version
 uv 0.8.2 (21fadbcc1 2025-07-22)
 ```
+
+## WSL
+
+```bash
+[araki@gmk ~]$ which python
+/usr/bin/which: no python in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib)
+[araki@gmk ~]$ which uv
+/usr/bin/which: no uv in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib)
+```
