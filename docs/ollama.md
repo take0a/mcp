@@ -394,3 +394,165 @@ AIの未来は、**最適化された協調**で大きく変化するでしょ�
 
 >>> /bye
 ```
+
+## RHEL10
+### デフォルト
+- https://github.com/ollama/ollama/blob/main/docs/linux.md
+- https://kazuhira-r.hatenablog.com/entry/2025/01/25/192411
+- インストールスクリプトではなく、ローカル実行する
+
+```
+araki@localhost:~/work/mcp/media$ curl -LO https://ollama.com/download/ollama-linux-amd64.tgz
+araki@localhost:~/work/mcp/media$ tar xvf ollama-linux-amd64.tgz -C ~/.local
+./
+./lib/
+./lib/ollama/
+./lib/ollama/libggml-cpu-x64.so
+./lib/ollama/libggml-base.so
+./lib/ollama/libggml-cpu-skylakex.so
+./lib/ollama/libggml-cpu-sandybridge.so
+./lib/ollama/libcublas.so.12.8.4.1
+./lib/ollama/libggml-cuda.so
+./lib/ollama/libcudart.so.12
+./lib/ollama/libcublas.so.12
+./lib/ollama/libcublasLt.so.12
+./lib/ollama/libggml-cpu-icelake.so
+./lib/ollama/libggml-cpu-alderlake.so
+./lib/ollama/libcudart.so.12.8.90
+./lib/ollama/libggml-cpu-sse42.so
+./lib/ollama/libggml-hip.so
+./lib/ollama/libggml-cpu-haswell.so
+./lib/ollama/libcublasLt.so.12.8.4.1
+./bin/
+./bin/ollama
+araki@localhost:~/work/mcp/media$ ollama serve
+Couldn't find '/home/araki/.ollama/id_ed25519'. Generating new private key.
+Your new public key is: 
+
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIRVZmIhp11ncVUQbTMMpjFtq9eSHs7r02avLdZGN7KD
+
+time=2025-07-25T15:37:00.437+09:00 level=INFO source=routes.go:1235 msg="server config" env="map[CUDA_VISIBLE_DEVICES: GPU_DEVICE_ORDINAL: HIP_VISIBLE_DEVICES: HSA_OVERRIDE_GFX_VERSION: HTTPS_PROXY: HTTP_PROXY: NO_PROXY: OLLAMA_CONTEXT_LENGTH:4096 OLLAMA_DEBUG:INFO OLLAMA_FLASH_ATTENTION:false OLLAMA_GPU_OVERHEAD:0 OLLAMA_HOST:http://127.0.0.1:11434 OLLAMA_INTEL_GPU:false OLLAMA_KEEP_ALIVE:5m0s OLLAMA_KV_CACHE_TYPE: OLLAMA_LLM_LIBRARY: OLLAMA_LOAD_TIMEOUT:5m0s OLLAMA_MAX_LOADED_MODELS:0 OLLAMA_MAX_QUEUE:512 OLLAMA_MODELS:/home/araki/.ollama/models OLLAMA_MULTIUSER_CACHE:false OLLAMA_NEW_ENGINE:false OLLAMA_NOHISTORY:false OLLAMA_NOPRUNE:false OLLAMA_NUM_PARALLEL:0 OLLAMA_ORIGINS:[http://localhost https://localhost http://localhost:* https://localhost:* http://127.0.0.1 https://127.0.0.1 http://127.0.0.1:* https://127.0.0.1:* http://0.0.0.0 https://0.0.0.0 http://0.0.0.0:* https://0.0.0.0:* app://* file://* tauri://* vscode-webview://* vscode-file://*] OLLAMA_SCHED_SPREAD:false ROCR_VISIBLE_DEVICES: http_proxy: https_proxy: no_proxy:]"
+time=2025-07-25T15:37:00.438+09:00 level=INFO source=images.go:476 msg="total blobs: 0"
+time=2025-07-25T15:37:00.438+09:00 level=INFO source=images.go:483 msg="total unused blobs removed: 0"
+time=2025-07-25T15:37:00.438+09:00 level=INFO source=routes.go:1288 msg="Listening on 127.0.0.1:11434 (version 0.9.6)"
+time=2025-07-25T15:37:00.438+09:00 level=INFO source=gpu.go:217 msg="looking for compatible GPUs"
+time=2025-07-25T15:37:00.442+09:00 level=WARN source=amd_linux.go:61 msg="ollama recommends running the https://www.amd.com/en/support/linux-drivers" error="amdgpu version file missing: /sys/module/amdgpu/version stat /sys/module/amdgpu/version: no such file or directory"
+time=2025-07-25T15:37:00.443+09:00 level=WARN source=amd_linux.go:443 msg="amdgpu detected, but no compatible rocm library found.  Either install rocm v6, or follow manual install instructions at https://github.com/ollama/ollama/blob/main/docs/linux.md#manual-install"
+time=2025-07-25T15:37:00.443+09:00 level=WARN source=amd_linux.go:348 msg="unable to verify rocm library: no suitable rocm found, falling back to CPU"
+time=2025-07-25T15:37:00.443+09:00 level=INFO source=gpu.go:377 msg="no compatible GPUs were discovered"
+time=2025-07-25T15:37:00.443+09:00 level=INFO source=types.go:130 msg="inference compute" id=0 library=cpu variant="" compute="" driver=0.0 name="" total="46.6 GiB" available="41.7 GiB"
+```
+
+- 上記のように、サーバを動かした状態で、別のターミナルから
+
+```
+araki@localhost:~/work$ ollama run gemma3:1b
+pulling manifest 
+pulling 7cd4618c1faf: 100% ▕███████████████████████████████████████████████████████████████████████████████▏ 815 MB                         
+pulling e0a42594d802: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  358 B                         
+pulling dd084c7d92a3: 100% ▕███████████████████████████████████████████████████████████████████████████████▏ 8.4 KB                         
+pulling 3116c5225075: 100% ▕███████████████████████████████████████████████████████████████████████████████▏   77 B                         
+pulling 120007c81bf8: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  492 B                         
+verifying sha256 digest 
+writing manifest 
+success 
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、2030年代に社会構造、仕事、個人の生活に深く浸透し、高度な自動化が進むでしょう。AIは、創造性や共感性を補完し、新たな産業を生み出す一
+方で、人間の知能を超える可能性も考慮し、倫理的なガイドラインの確立が急務となります。
+
+total duration:       1.457997249s
+load duration:        50.387853ms
+prompt eval count:    101 token(s)
+prompt eval duration: 62.773192ms
+prompt eval rate:     1608.97 tokens/s
+eval count:           73 token(s)
+eval duration:        1.331238227s
+eval rate:            54.84 tokens/s
+>>> 
+```
+```
+araki@localhost:~/work$ ollama run gemma3:4b
+pulling manifest 
+pulling aeda25e63ebd: 100% ▕███████████████████████████████████████████████████████████████████████████████▏ 3.3 GB                         
+pulling e0a42594d802: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  358 B                         
+pulling dd084c7d92a3: 100% ▕███████████████████████████████████████████████████████████████████████████████▏ 8.4 KB                         
+pulling 3116c5225075: 100% ▕███████████████████████████████████████████████████████████████████████████████▏   77 B                         
+pulling b6ae5839783f: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  489 B                         
+verifying sha256 digest 
+writing manifest 
+success 
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、より高度な自然言語処理と学習能力を獲得し、ビジネス、医療、教育などあらゆる分野で不可欠な存在となるでしょう。倫理的な問題や雇用の変
+化への対応が課題となりつつ、人間とAIが協調する社会が実現すると予測されます。
+
+total duration:       3.266025727s
+load duration:        54.755791ms
+prompt eval count:    21 token(s)
+prompt eval duration: 242.782833ms
+prompt eval rate:     86.50 tokens/s
+eval count:           61 token(s)
+eval duration:        2.967739632s
+eval rate:            20.55 tokens/s
+```
+```
+araki@localhost:~/work$ ollama run gemma3:12b
+pulling manifest 
+pulling e8ad13eff07a: 100% ▕██████████████████████████████████████████████████████████████████████████████ ▏ 8.1 GB/8.1 GB  8.9 MB/s      0s
+pulling e0a42594d802: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  358 B                         
+pulling dd084c7d92a3: 100% ▕███████████████████████████████████████████████████████████████████████████████▏ 8.4 KB                         
+pulling 3116c5225075: 100% ▕███████████████████████████████████████████████████████████████████████████████▏   77 B                         
+pulling 6819964c2bcf: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  490 B                         
+verifying sha256 digest 
+writing manifest 
+success 
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、より人間らしく、創造的になり、医療、教育、交通などあらゆる分野を革新するでしょう。同時に、倫理的な課題や雇用の変化に対応する必要も
+生じます。よりパーソナライズされ、社会に不可欠な存在となるでしょう。
+
+total duration:       8.701305473s
+load duration:        55.021466ms
+prompt eval count:    21 token(s)
+prompt eval duration: 745.122602ms
+prompt eval rate:     28.18 tokens/s
+eval count:           59 token(s)
+eval duration:        7.900426817s
+eval rate:            7.47 tokens/s
+```
+```
+araki@localhost:~/work$ ollama run gemma3:27b
+pulling manifest 
+pulling e796792eba26: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  17 GB                         
+pulling e0a42594d802: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  358 B                         
+pulling dd084c7d92a3: 100% ▕███████████████████████████████████████████████████████████████████████████████▏ 8.4 KB                         
+pulling 3116c5225075: 100% ▕███████████████████████████████████████████████████████████████████████████████▏   77 B                         
+pulling f838f048d368: 100% ▕███████████████████████████████████████████████████████████████████████████████▏  490 B                         
+verifying sha256 digest 
+writing manifest 
+success 
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、より自然な言語処理能力と創造性を持ち、医療、教育、ビジネスなどあらゆる分野で個別化されたサービスを提供。同時に、倫理的な課題や雇用
+の変化も生じ、人間との協調が鍵となるでしょう。
+
+
+total duration:       17.583456447s
+load duration:        56.46456ms
+prompt eval count:    21 token(s)
+prompt eval duration: 1.723112725s
+prompt eval rate:     12.19 tokens/s
+eval count:           54 token(s)
+eval duration:        15.803282602s
+eval rate:            3.42 tokens/s
+>>> Send a message (/? for help)
+```
+
+```
+araki@localhost:~/work/mcp/media$ curl -L https://ollama.com/download/ollama-linux-amd64-rocm.tgz -o ollama-linux-amd64-rocm.tgz
+```
