@@ -555,4 +555,103 @@ eval rate:            3.42 tokens/s
 
 ```
 araki@localhost:~/work/mcp/media$ curl -L https://ollama.com/download/ollama-linux-amd64-rocm.tgz -o ollama-linux-amd64-rocm.tgz
+araki@localhost:~/work/mcp/media$ tar xvf ollama-linux-amd64-rocm.tgz -C ~/.local
+araki@localhost:~/work/mcp/media$ HSA_OVERRIDE_GFX_VERSION=11.0.2 ollama serve
+time=2025-07-25T16:54:29.639+09:00 level=INFO source=routes.go:1235 msg="server config" env="map[CUDA_VISIBLE_DEVICES: GPU_DEVICE_ORDINAL: HIP_VISIBLE_DEVICES: HSA_OVERRIDE_GFX_VERSION:11.0.2 HTTPS_PROXY: HTTP_PROXY: NO_PROXY: OLLAMA_CONTEXT_LENGTH:4096 OLLAMA_DEBUG:INFO OLLAMA_FLASH_ATTENTION:false OLLAMA_GPU_OVERHEAD:0 OLLAMA_HOST:http://127.0.0.1:11434 OLLAMA_INTEL_GPU:false OLLAMA_KEEP_ALIVE:5m0s OLLAMA_KV_CACHE_TYPE: OLLAMA_LLM_LIBRARY: OLLAMA_LOAD_TIMEOUT:5m0s OLLAMA_MAX_LOADED_MODELS:0 OLLAMA_MAX_QUEUE:512 OLLAMA_MODELS:/home/araki/.ollama/models OLLAMA_MULTIUSER_CACHE:false OLLAMA_NEW_ENGINE:false OLLAMA_NOHISTORY:false OLLAMA_NOPRUNE:false OLLAMA_NUM_PARALLEL:0 OLLAMA_ORIGINS:[http://localhost https://localhost http://localhost:* https://localhost:* http://127.0.0.1 https://127.0.0.1 http://127.0.0.1:* https://127.0.0.1:* http://0.0.0.0 https://0.0.0.0 http://0.0.0.0:* https://0.0.0.0:* app://* file://* tauri://* vscode-webview://* vscode-file://*] OLLAMA_SCHED_SPREAD:false ROCR_VISIBLE_DEVICES: http_proxy: https_proxy: no_proxy:]"
+time=2025-07-25T16:54:29.640+09:00 level=INFO source=images.go:476 msg="total blobs: 11"
+time=2025-07-25T16:54:29.640+09:00 level=INFO source=images.go:483 msg="total unused blobs removed: 0"
+time=2025-07-25T16:54:29.640+09:00 level=INFO source=routes.go:1288 msg="Listening on 127.0.0.1:11434 (version 0.9.6)"
+time=2025-07-25T16:54:29.640+09:00 level=INFO source=gpu.go:217 msg="looking for compatible GPUs"
+time=2025-07-25T16:54:29.646+09:00 level=WARN source=amd_linux.go:61 msg="ollama recommends running the https://www.amd.com/en/support/linux-drivers" error="amdgpu version file missing: /sys/module/amdgpu/version stat /sys/module/amdgpu/version: no such file or directory"
+time=2025-07-25T16:54:29.647+09:00 level=INFO source=amd_linux.go:389 msg="skipping rocm gfx compatibility check" HSA_OVERRIDE_GFX_VERSION=11.0.2
+time=2025-07-25T16:54:29.647+09:00 level=INFO source=types.go:130 msg="inference compute" id=0 library=rocm variant="" compute=gfx1103 driver=0.0 name=1002:1900 total="16.0 GiB" available="15.3 GiB"
+```
+
+```
+araki@localhost:~/work$ ollama run gemma3:4b
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、より高度な自然言語処理と視覚認識能力を獲得し、私たちの生活、仕事、研究に不可欠な存在になると予測されます。自動化が進み、創造的な活
+動もAIと共に行われるようになり、社会構造そのものも大きく変化するでしょう。同時に、倫理的な問題や雇用の変化への対応も重要な課題となります
+。
+
+total duration:       3.565773866s
+load duration:        55.443065ms
+prompt eval count:    21 token(s)
+prompt eval duration: 229.789512ms
+prompt eval rate:     91.39 tokens/s
+eval count:           77 token(s)
+eval duration:        3.279562586s
+eval rate:            23.48 tokens/s
+>>> /bye
+araki@localhost:~/work$ ollama ps
+NAME         ID              SIZE      PROCESSOR    UNTIL              
+gemma3:4b    a2af6cc3eb7f    6.0 GB    100% GPU     4 minutes from now   
+```
+```
+araki@localhost:~/work$ ollama run gemma3:12b
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、より人間らしく、創造的になり、医療、教育、環境問題など、あらゆる分野で革新をもたらすでしょう。同時に、倫理的な課題や雇用の変化への
+対応が不可欠になります。
+
+total duration:       5.848764216s
+load duration:        49.544304ms
+prompt eval count:    21 token(s)
+prompt eval duration: 340.21446ms
+prompt eval rate:     61.73 tokens/s
+eval count:           47 token(s)
+eval duration:        5.458200503s
+eval rate:            8.61 tokens/s
+>>> /bye
+araki@localhost:~/work$ ollama ps
+NAME          ID              SIZE     PROCESSOR    UNTIL              
+gemma3:12b    f4031aab637d    11 GB    100% GPU     4 minutes from now
+```
+
+```
+araki@localhost:~/work$ ollama run gemma3:27b
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、より自然な言語理解と高度な推論能力を獲得し、医療、教育、ビジネスなどあらゆる分野で個々のニーズに合わせたサービスを提供。同時に、倫
+理的な課題や雇用への影響も大きく、社会全体での議論と適応が不可欠となるでしょう。
+
+
+total duration:       19.547332271s
+load duration:        50.494267ms
+prompt eval count:    21 token(s)
+prompt eval duration: 820.790392ms
+prompt eval rate:     25.59 tokens/s
+eval count:           62 token(s)
+eval duration:        18.675341767s
+eval rate:            3.32 tokens/s
+>>> /bye
+araki@localhost:~/work$ ollama ps
+NAME          ID              SIZE     PROCESSOR          UNTIL              
+gemma3:27b    a418f5838eaf    21 GB    25%/75% CPU/GPU    4 minutes from now  
+```
+
+```
+araki@localhost:~/work$ ollama run gemma3:1b
+>>> /set verbose
+Set 'verbose' mode.
+>>> AIの未来を予測してください。（100字）
+AIは、生活、仕事、創造性全てを劇的に変えるでしょう。医療、環境問題、宇宙開発など、人類の課題解決に大きく貢献する一方で、倫理、雇用、プラ
+イバシーといった新たな課題も生み出します。人間とAIが共存し、新たな価値を生み出すか、あるいは脅威となるか、その未来は予測不可能です。
+
+total duration:       1.49101935s
+load duration:        52.162752ms
+prompt eval count:    21 token(s)
+prompt eval duration: 128.135917ms
+prompt eval rate:     163.89 tokens/s
+eval count:           81 token(s)
+eval duration:        1.309864404s
+eval rate:            61.84 tokens/s
+>>> /bye
+araki@localhost:~/work$ ollama ps
+NAME         ID              SIZE      PROCESSOR    UNTIL              
+gemma3:1b    8648f39daa8f    1.9 GB    100% GPU     3 minutes from now
 ```
