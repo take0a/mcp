@@ -39,7 +39,7 @@ def create_table(table: dict):
         for column in table["columns"]:
             print(f"\t{column['name']}\t{column['type']},")
         if len(table["keys"]) > 0:
-            values = " ".join(table["keys"].values())
+            values = ", ".join(table["keys"].values())
             print(f"\tPRIMARY KEY ({values})")
         print(");", end="\n\n")
 

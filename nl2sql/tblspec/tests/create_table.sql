@@ -8,7 +8,7 @@ CREATE TABLE sales_plan (
 	result_quantity	decimal(18),
 	result_amount	decimal(18),
 	marginal_proft	decimal(18),
-	PRIMARY KEY (planned_year_month sales_dept_code sales_emp_code item_code)
+	PRIMARY KEY (planned_year_month, sales_dept_code, sales_emp_code, item_code)
 );
 
 COMMENT ON TABLE sales_plan IS '販売計画';
@@ -29,7 +29,7 @@ CREATE TABLE production_plan (
 	planned_amount	decimal(18),
 	result_quantity	decimal(18),
 	result_amount	decimal(18),
-	PRIMARY KEY (planned_year_month item_code)
+	PRIMARY KEY (planned_year_month, item_code)
 );
 
 COMMENT ON TABLE production_plan IS '生産計画';
@@ -148,7 +148,7 @@ CREATE TABLE quote_order_line (
 	quote_order_quantity	decimal(18),
 	unit_code	char(8),
 	quote_order_unit_price	decimal(18),
-	PRIMARY KEY (quote_number line_number)
+	PRIMARY KEY (quote_number, line_number)
 );
 
 COMMENT ON TABLE quote_order_line IS '見積・受注明細';
@@ -182,7 +182,7 @@ COMMENT ON TABLE m_order_ship_class IS '受注・出荷区分マスタ';
 COMMENT ON COLUMN m_order_ship_class.order_ship_class_code IS '受注・出荷区分コード';
 COMMENT ON COLUMN m_order_ship_class.order_ship_class_name IS '受注・出荷区分名';
 
-CREATE TABLE order (
+CREATE TABLE order_table (
 	order_number	char(16),
 	branch_number	char(16),
 	sales_emp_code	char(8),
@@ -211,43 +211,43 @@ CREATE TABLE order (
 	cash_amount	decimal(18),
 	bill_total_amount	decimal(18),
 	complete_flag	char(1),
-	PRIMARY KEY (order_number)
+	PRIMARY KEY (order_number, branch_number)
 );
 
-COMMENT ON TABLE order IS '受注基本';
-COMMENT ON COLUMN order.order_number IS '受注番号';
-COMMENT ON COLUMN order.branch_number IS '変更番号';
-COMMENT ON COLUMN order.sales_emp_code IS '営業担当者コード';
-COMMENT ON COLUMN order.customer_code IS '得意先コード';
-COMMENT ON COLUMN order.invoice_customer_code IS '請求先コード';
-COMMENT ON COLUMN order.delivery_customer_code IS '納入先コード';
-COMMENT ON COLUMN order.delivery_customer_name IS '納入先名';
-COMMENT ON COLUMN order.zip_code IS '郵便番号';
-COMMENT ON COLUMN order.address IS '住所';
-COMMENT ON COLUMN order.phone_number IS '電話番号';
-COMMENT ON COLUMN order.customer_purchase_order_number IS '得意先発注番号';
-COMMENT ON COLUMN order.order_type_code IS '受注種別コード';
-COMMENT ON COLUMN order.order_ship_class_code IS '受注・出荷区分コード';
-COMMENT ON COLUMN order.purpose IS '用途';
-COMMENT ON COLUMN order.order_basic_spec IS 'オーダー基本仕様';
-COMMENT ON COLUMN order.order_total_amount IS '受注総額';
-COMMENT ON COLUMN order.quote_number IS '見積番号';
-COMMENT ON COLUMN order.quote_total_cost IS '見積原価総額';
-COMMENT ON COLUMN order.quote_variable_cost IS '見積変動費';
-COMMENT ON COLUMN order.order_date IS '受注日';
-COMMENT ON COLUMN order.delivery_date IS '納期';
-COMMENT ON COLUMN order.pre_compensation_order_number IS '補償前受注番号';
-COMMENT ON COLUMN order.order_oem_flag IS '受注OEMフラグ';
-COMMENT ON COLUMN order.rebate_payment_flag IS 'リベート支払フラグ';
-COMMENT ON COLUMN order.transport_cost_burden_flag IS '運送費負担フラグ';
-COMMENT ON COLUMN order.cash_amount IS '契約・現金支払金額';
-COMMENT ON COLUMN order.bill_total_amount IS '契約・手形支払合計金額';
-COMMENT ON COLUMN order.complete_flag IS 'オーダー完納フラグ';
+COMMENT ON TABLE order_table IS '受注基本';
+COMMENT ON COLUMN order_table.order_number IS '受注番号';
+COMMENT ON COLUMN order_table.branch_number IS '変更番号';
+COMMENT ON COLUMN order_table.sales_emp_code IS '営業担当者コード';
+COMMENT ON COLUMN order_table.customer_code IS '得意先コード';
+COMMENT ON COLUMN order_table.invoice_customer_code IS '請求先コード';
+COMMENT ON COLUMN order_table.delivery_customer_code IS '納入先コード';
+COMMENT ON COLUMN order_table.delivery_customer_name IS '納入先名';
+COMMENT ON COLUMN order_table.zip_code IS '郵便番号';
+COMMENT ON COLUMN order_table.address IS '住所';
+COMMENT ON COLUMN order_table.phone_number IS '電話番号';
+COMMENT ON COLUMN order_table.customer_purchase_order_number IS '得意先発注番号';
+COMMENT ON COLUMN order_table.order_type_code IS '受注種別コード';
+COMMENT ON COLUMN order_table.order_ship_class_code IS '受注・出荷区分コード';
+COMMENT ON COLUMN order_table.purpose IS '用途';
+COMMENT ON COLUMN order_table.order_basic_spec IS 'オーダー基本仕様';
+COMMENT ON COLUMN order_table.order_total_amount IS '受注総額';
+COMMENT ON COLUMN order_table.quote_number IS '見積番号';
+COMMENT ON COLUMN order_table.quote_total_cost IS '見積原価総額';
+COMMENT ON COLUMN order_table.quote_variable_cost IS '見積変動費';
+COMMENT ON COLUMN order_table.order_date IS '受注日';
+COMMENT ON COLUMN order_table.delivery_date IS '納期';
+COMMENT ON COLUMN order_table.pre_compensation_order_number IS '補償前受注番号';
+COMMENT ON COLUMN order_table.order_oem_flag IS '受注OEMフラグ';
+COMMENT ON COLUMN order_table.rebate_payment_flag IS 'リベート支払フラグ';
+COMMENT ON COLUMN order_table.transport_cost_burden_flag IS '運送費負担フラグ';
+COMMENT ON COLUMN order_table.cash_amount IS '契約・現金支払金額';
+COMMENT ON COLUMN order_table.bill_total_amount IS '契約・手形支払合計金額';
+COMMENT ON COLUMN order_table.complete_flag IS 'オーダー完納フラグ';
 
 CREATE TABLE order_spec_change (
 	order_number	char(16),
 	spec_change_date	date,
-	PRIMARY KEY (order_number spec_change_date)
+	PRIMARY KEY (order_number, spec_change_date)
 );
 
 COMMENT ON TABLE order_spec_change IS '受注基本・仕様変更';
@@ -259,7 +259,7 @@ CREATE TABLE order_bill_payment (
 	line_number	decimal(4),
 	bill_amount	decimal(18),
 	bill_site	decimal(3),
-	PRIMARY KEY (order_number line_number)
+	PRIMARY KEY (order_number, line_number)
 );
 
 COMMENT ON TABLE order_bill_payment IS '受注基本・手形支払';
@@ -315,7 +315,7 @@ CREATE TABLE order_line (
 	correct_ship_date	date,
 	original_ship_number	char(16),
 	sales_recording_date	date,
-	PRIMARY KEY (order_number line_number)
+	PRIMARY KEY (order_number, line_number)
 );
 
 COMMENT ON TABLE order_line IS '受注明細';
@@ -352,7 +352,7 @@ CREATE TABLE actual_demand (
 	sales_dept_code	char(8),
 	item_code	char(8),
 	actual_demand_quantity	decimal(18),
-	PRIMARY KEY (start_date sales_dept_code item_code)
+	PRIMARY KEY (start_date, sales_dept_code, item_code)
 );
 
 COMMENT ON TABLE actual_demand IS '実需情報';
@@ -367,7 +367,7 @@ CREATE TABLE make_to_stock_order (
 	end_date	date,
 	item_code	char(8),
 	instructed_quantity	decimal(18),
-	PRIMARY KEY (start_date item_code)
+	PRIMARY KEY (start_date, item_code)
 );
 
 COMMENT ON TABLE make_to_stock_order IS '見込品指示';
@@ -454,7 +454,7 @@ CREATE TABLE quote_req (
 	quote_number	char(16),
 	quote_req_number	decimal(4),
 	quote_req	varchar(256),
-	PRIMARY KEY (quote_number quote_req_number)
+	PRIMARY KEY (quote_number, quote_req_number)
 );
 
 COMMENT ON TABLE quote_req IS '見積要件';
@@ -497,7 +497,7 @@ CREATE TABLE quote_line (
 	other_material_total_cost	decimal(18),
 	other_proc_total_cost	decimal(18),
 	other_outsource_total_cost	decimal(18),
-	PRIMARY KEY (quote_number line_number)
+	PRIMARY KEY (quote_number, line_number)
 );
 
 COMMENT ON TABLE quote_line IS '見積明細';
@@ -524,7 +524,7 @@ CREATE TABLE quote_line_proc (
 	unit_proc_time	decimal(18),
 	proc_cost	decimal(18),
 	outsource_cost	decimal(18),
-	PRIMARY KEY (quote_number line_number major_proc_code)
+	PRIMARY KEY (quote_number, line_number, major_proc_code)
 );
 
 COMMENT ON TABLE quote_line_proc IS '見積明細・工程';
@@ -546,7 +546,7 @@ CREATE TABLE m_basis_value (
 	basis_man_hour	decimal(4),
 	setup_time	decimal(18),
 	unit_proc_time	decimal(18),
-	PRIMARY KEY (product_code part_code proc_code)
+	PRIMARY KEY (product_code, part_code, proc_code)
 );
 
 COMMENT ON TABLE m_basis_value IS '基準値マスタ';
@@ -659,7 +659,7 @@ CREATE TABLE design_man_hour (
 	parts_design_total_result_time	decimal(18),
 	other_total_result_time	decimal(18),
 	total_design_cost	decimal(18),
-	PRIMARY KEY (order_number item_code)
+	PRIMARY KEY (order_number, item_code)
 );
 
 COMMENT ON TABLE design_man_hour IS '設計工数';
@@ -692,7 +692,7 @@ CREATE TABLE design_work (
 	start_date	date,
 	design_work_class_code	char(8),
 	result_time	decimal(18),
-	PRIMARY KEY (order_number design_emp_code start_date)
+	PRIMARY KEY (order_number, design_emp_code, start_date)
 );
 
 COMMENT ON TABLE design_work IS '設計作業';
@@ -709,7 +709,7 @@ CREATE TABLE forecast_plan (
 	sales_order_quantity	decimal(18),
 	order_quantity	decimal(18),
 	plan_delivery_date	date,
-	PRIMARY KEY (plan_order_date lot_number item_code)
+	PRIMARY KEY (plan_order_date, lot_number, item_code)
 );
 
 COMMENT ON TABLE forecast_plan IS '見込計画';
@@ -807,7 +807,7 @@ CREATE TABLE m_proc_procedure (
 	inspect_accept_class_code	char(8),
 	product_tag_flag	char(1),
 	delivery_location_code	char(8),
-	PRIMARY KEY (item_code proc_seq_number)
+	PRIMARY KEY (item_code, proc_seq_number)
 );
 
 COMMENT ON TABLE m_proc_procedure IS '工程手順マスタ';
@@ -887,7 +887,7 @@ CREATE TABLE required_amount (
 	expanded_item_code	char(8),
 	procure_order_type_code	char(8),
 	required_quantity	decimal(18),
-	PRIMARY KEY (order_lot_number item_code)
+	PRIMARY KEY (order_lot_number, item_code)
 );
 
 COMMENT ON TABLE required_amount IS '所要量';
@@ -944,7 +944,7 @@ CREATE TABLE material_outgoing (
 	unit_code	char(8),
 	outgoing_unit_price	decimal(18),
 	outgoing_date	date,
-	PRIMARY KEY (order_lot_number proc_seq_number)
+	PRIMARY KEY (order_lot_number, proc_seq_number)
 );
 
 COMMENT ON TABLE material_outgoing IS '部材出庫';
@@ -1016,7 +1016,7 @@ CREATE TABLE schedule_proc (
 	complete_delivery_date	date,
 	inspect_accept_date	date,
 	delivery_location_code	char(8),
-	PRIMARY KEY (order_lot_number item_code proc_seq_number)
+	PRIMARY KEY (order_lot_number, item_code, proc_seq_number)
 );
 
 COMMENT ON TABLE schedule_proc IS '日程・工程';
@@ -1098,7 +1098,7 @@ CREATE TABLE procure_order (
 	discount_amount	decimal(18),
 	accept_total_amount	decimal(18),
 	cook_keep_flag	char(1),
-	PRIMARY KEY (order_lot_number item_code proc_seq_number)
+	PRIMARY KEY (order_lot_number, item_code, proc_seq_number)
 );
 
 COMMENT ON TABLE procure_order IS '調達手配';
@@ -1210,7 +1210,7 @@ CREATE TABLE m_capacity (
 	warehouse_slack_rate	decimal(5,2),
 	start_date	date,
 	end_date	date,
-	PRIMARY KEY (dept_code work_unit_code)
+	PRIMARY KEY (dept_code, work_unit_code)
 );
 
 COMMENT ON TABLE m_capacity IS '能力マスタ';
@@ -1234,7 +1234,7 @@ CREATE TABLE operation_plan (
 	operation_plan_period	decimal(4),
 	number_of_work_group_people	decimal(4),
 	max_load_capacity	decimal(18),
-	PRIMARY KEY (dept_code work_unit_code)
+	PRIMARY KEY (dept_code, work_unit_code)
 );
 
 COMMENT ON TABLE operation_plan IS '稼働計画';
@@ -1260,7 +1260,7 @@ CREATE TABLE work_result (
 	procure_period	decimal(4),
 	actual_procure_days	decimal(4),
 	order_lot_number	char(16),
-	PRIMARY KEY (item_code proc_code work_unit_code)
+	PRIMARY KEY (item_code, proc_code, work_unit_code)
 );
 
 COMMENT ON TABLE work_result IS '作業実績';
@@ -1286,7 +1286,7 @@ CREATE TABLE work_eval (
 	total_result_time	decimal(18),
 	required_total_quantity	decimal(18),
 	result_total_quantity	decimal(18),
-	PRIMARY KEY (proc_code work_unit_code work_year_month)
+	PRIMARY KEY (proc_code, work_unit_code, work_year_month)
 );
 
 COMMENT ON TABLE work_eval IS '作業評価';
@@ -1311,7 +1311,7 @@ CREATE TABLE purchase_result (
 	actual_procure_days	decimal(4),
 	purchase_order_number	char(16),
 	supplier_code	char(8),
-	PRIMARY KEY (item_code purchase_type_code purchase_date)
+	PRIMARY KEY (item_code, purchase_type_code, purchase_date)
 );
 
 COMMENT ON TABLE purchase_result IS '購買実績';
@@ -1336,7 +1336,7 @@ CREATE TABLE purchase_eval (
 	purchase_total_amount	decimal(18),
 	purchase_total_quantity	decimal(18),
 	accept_total_quantity	decimal(18),
-	PRIMARY KEY (purchase_type_code purchase_emp_code eval_year_month)
+	PRIMARY KEY (purchase_type_code, purchase_emp_code, eval_year_month)
 );
 
 COMMENT ON TABLE purchase_eval IS '購買評価';
@@ -1378,7 +1378,7 @@ CREATE TABLE m_inspect_basis (
 	inspect_item	varchar(64),
 	meas_device_tool	varchar(64),
 	meas_part_code	char(8),
-	PRIMARY KEY (item_code proc_code)
+	PRIMARY KEY (item_code, proc_code)
 );
 
 COMMENT ON TABLE m_inspect_basis IS '検査基準マスタ';
@@ -1443,11 +1443,11 @@ COMMENT ON COLUMN inspect.inspect_date IS '検査日';
 CREATE TABLE inspect_line (
 	inspect_number	char(16),
 	meas_part_code	char(8),
-	meas_basis_value	double,
-	upper_tolerance	double,
-	lower_tolerance	double,
+	meas_basis_value	double precision,
+	upper_tolerance	double precision,
+	lower_tolerance	double precision,
 	parts_serial_number	char(16),
-	actual_meas_value	double,
+	actual_meas_value	double precision,
 	PRIMARY KEY (inspect_number)
 );
 
@@ -1610,7 +1610,7 @@ CREATE TABLE m_inventory (
 	before_inv_count_total_quantity	decimal(18),
 	inv_count_incoming_quantity	decimal(18),
 	inv_count_outgoing_quantity	decimal(18),
-	PRIMARY KEY (item_code proc_code inv_type_code asset_class_code)
+	PRIMARY KEY (item_code, proc_code, inv_type_code, asset_class_code)
 );
 
 COMMENT ON TABLE m_inventory IS '在庫マスタ';
@@ -1658,7 +1658,7 @@ CREATE TABLE off_books_inv (
 	inv_type_code	char(8),
 	asset_class_code	char(8),
 	inv_use_class_code	char(8),
-	item_code	char(8),
+	item_group_code	char(8),
 	warehouse_code	char(8),
 	storage_location_code	char(8),
 	shelf_position_number	char(16),
@@ -1670,7 +1670,7 @@ CREATE TABLE off_books_inv (
 	latest_outgoing_date	date,
 	latest_inv_count_date	date,
 	current_inv_count_date	date,
-	PRIMARY KEY (order_lot_number item_code proc_code inv_type_code asset_class_code)
+	PRIMARY KEY (order_lot_number, item_code, proc_code, inv_type_code, asset_class_code)
 );
 
 COMMENT ON TABLE off_books_inv IS '簿外在庫';
@@ -1681,7 +1681,7 @@ COMMENT ON COLUMN off_books_inv.proc_code IS '工程コード';
 COMMENT ON COLUMN off_books_inv.inv_type_code IS '在庫品種別コード';
 COMMENT ON COLUMN off_books_inv.asset_class_code IS '資産区分コード';
 COMMENT ON COLUMN off_books_inv.inv_use_class_code IS '在庫用途区分コード';
-COMMENT ON COLUMN off_books_inv.item_code IS '品目コード';
+COMMENT ON COLUMN off_books_inv.item_group_code IS '品目グループコード';
 COMMENT ON COLUMN off_books_inv.warehouse_code IS '倉庫コード';
 COMMENT ON COLUMN off_books_inv.storage_location_code IS '格納場所コード';
 COMMENT ON COLUMN off_books_inv.shelf_position_number IS '棚位置番号';
@@ -1795,7 +1795,7 @@ CREATE TABLE inv_eval (
 	current_month_inv_quantity	decimal(18),
 	current_month_incoming_quantity	decimal(18),
 	current_month_outgoing_quantity	decimal(18),
-	PRIMARY KEY (warehouse_code inv_type_code item_group_code eval_year_month)
+	PRIMARY KEY (warehouse_code, inv_type_code, item_group_code, eval_year_month)
 );
 
 COMMENT ON TABLE inv_eval IS '在庫評価';
@@ -1819,7 +1819,7 @@ CREATE TABLE replenish_analysis (
 	safely_inv_quantity	decimal(18),
 	replenish_purchase_quantity	decimal(18),
 	procure_period_outgoing_quantity	decimal(18),
-	PRIMARY KEY (warehouse_code item_code proc_code inv_type_code item_group_code procure_period)
+	PRIMARY KEY (warehouse_code, item_code, proc_code, inv_type_code, item_group_code, procure_period)
 );
 
 COMMENT ON TABLE replenish_analysis IS '補充分析';
@@ -2104,7 +2104,7 @@ CREATE TABLE sales_receivable (
 	accept_total_amount	decimal(18),
 	receivable_recording_date	date,
 	invoice_issue_date	date,
-	PRIMARY KEY (order_number ship_number)
+	PRIMARY KEY (order_number, ship_number)
 );
 
 COMMENT ON TABLE sales_receivable IS '売上売掛';
@@ -2148,7 +2148,7 @@ CREATE TABLE receivable_balance (
 	bill_deposit_total_amount	decimal(18),
 	bill_average_site	decimal(3),
 	next_carryover_balance	decimal(18),
-	PRIMARY KEY (customer_code year_month)
+	PRIMARY KEY (customer_code, year_month)
 );
 
 COMMENT ON TABLE receivable_balance IS '売掛残高';
@@ -2185,7 +2185,7 @@ CREATE TABLE deposit_schedule (
 	deposit_type_code	char(8),
 	deposit_planned_amount	decimal(18),
 	bill_payment_due_date	date,
-	PRIMARY KEY (customer_code deposit_plan_date)
+	PRIMARY KEY (customer_code, deposit_plan_date)
 );
 
 COMMENT ON TABLE deposit_schedule IS '入金予定';
@@ -2207,7 +2207,7 @@ CREATE TABLE receivable_eval (
 	cash_deposit_amount	decimal(18),
 	bill_deposit_amount	decimal(18),
 	bill_average_site	decimal(3),
-	PRIMARY KEY (customer_code eval_year_month)
+	PRIMARY KEY (customer_code, eval_year_month)
 );
 
 COMMENT ON TABLE receivable_eval IS '売掛評価';
@@ -2238,7 +2238,7 @@ CREATE TABLE payable_balance (
 	bill_payment_total_amount	decimal(18),
 	bill_average_site	decimal(3),
 	next_carryover_balance	decimal(18),
-	PRIMARY KEY (payout_partner_code year_month)
+	PRIMARY KEY (payout_partner_code, year_month)
 );
 
 COMMENT ON TABLE payable_balance IS '買掛残高';
@@ -2275,7 +2275,7 @@ CREATE TABLE payment_schedule (
 	payment_amount	decimal(18),
 	bill_mgmt_number	char(16),
 	bill_payment_due_date	date,
-	PRIMARY KEY (payout_partner_code payment_plan_date payment_type_code)
+	PRIMARY KEY (payout_partner_code, payment_plan_date, payment_type_code)
 );
 
 COMMENT ON TABLE payment_schedule IS '支払予定';
@@ -2298,31 +2298,31 @@ COMMENT ON COLUMN m_bank_account_type.bank_account_type_name IS '銀行口座種
 
 CREATE TABLE transfer_request (
 	transfer_request_number	char(16),
-	Payment date	date,
+	payment_date	date,
 	payout_bank_code	char(8),
 	payout_bank_account_type_code	char(8),
 	payout_account_number	char(16),
-	Remittance bank code	char(8),
-	Payee name	varchar(64),
+	remittance_bank_code	char(8),
+	payee_name	varchar(64),
 	transfer_bank_account_type_code	char(8),
 	transfer_account_number	char(16),
 	transfer_amount	decimal(18),
-	Transfer fee	decimal(18),
+	transfer_fee	decimal(18),
 	PRIMARY KEY (transfer_request_number)
 );
 
 COMMENT ON TABLE transfer_request IS '振込依頼';
 COMMENT ON COLUMN transfer_request.transfer_request_number IS '振込依頼番号';
-COMMENT ON COLUMN transfer_request.Payment date IS '支払日';
+COMMENT ON COLUMN transfer_request.payment_date IS '支払日';
 COMMENT ON COLUMN transfer_request.payout_bank_code IS '払出銀行コード';
 COMMENT ON COLUMN transfer_request.payout_bank_account_type_code IS '払出銀行口座種別コード';
 COMMENT ON COLUMN transfer_request.payout_account_number IS '払出口座番号';
-COMMENT ON COLUMN transfer_request.Remittance bank code IS '振込銀行コード';
-COMMENT ON COLUMN transfer_request.Payee name IS '振込先名';
+COMMENT ON COLUMN transfer_request.remittance_bank_code IS '振込銀行コード';
+COMMENT ON COLUMN transfer_request.payee_name IS '振込先名';
 COMMENT ON COLUMN transfer_request.transfer_bank_account_type_code IS '振込銀行口座種別コード';
 COMMENT ON COLUMN transfer_request.transfer_account_number IS '振込口座番号';
 COMMENT ON COLUMN transfer_request.transfer_amount IS '振込金額';
-COMMENT ON COLUMN transfer_request.Transfer fee IS '振込手数料';
+COMMENT ON COLUMN transfer_request.transfer_fee IS '振込手数料';
 
 CREATE TABLE m_bill_type (
 	bill_type_code	char(8),
@@ -2372,7 +2372,7 @@ CREATE TABLE bill_mgmt (
 	bill_status_class_code	char(8),
 	bill_payer_code	char(8),
 	submit_endorse_code	char(8),
-	Submitter/Endorser Name	varchar(64),
+	submitter_endorser_name	varchar(64),
 	face_amount	decimal(18),
 	submit_date	date,
 	collect_due_date	date,
@@ -2395,7 +2395,7 @@ COMMENT ON COLUMN bill_mgmt.bill_issuing_class_code IS '手形発生区分コー
 COMMENT ON COLUMN bill_mgmt.bill_status_class_code IS '手形状態区分コード';
 COMMENT ON COLUMN bill_mgmt.bill_payer_code IS '手形支払人コード';
 COMMENT ON COLUMN bill_mgmt.submit_endorse_code IS '提出・裏書人コード';
-COMMENT ON COLUMN bill_mgmt.Submitter/Endorser Name IS '提出・裏書人名';
+COMMENT ON COLUMN bill_mgmt.submitter_endorser_name IS '提出・裏書人名';
 COMMENT ON COLUMN bill_mgmt.face_amount IS '額面金額';
 COMMENT ON COLUMN bill_mgmt.submit_date IS '提出日';
 COMMENT ON COLUMN bill_mgmt.collect_due_date IS '取立期日';
@@ -2550,7 +2550,7 @@ CREATE TABLE m_deduction (
 	loan_repayment_total_amount	decimal(18),
 	loan_balance	decimal(18),
 	loan_rate	decimal(5,2),
-	PRIMARY KEY (emp_code deduct_type_code deduct_time_class_code start_date)
+	PRIMARY KEY (emp_code, deduct_type_code, deduct_time_class_code, start_date)
 );
 
 COMMENT ON TABLE m_deduction IS '継続控除マスタ';
@@ -2571,7 +2571,7 @@ CREATE TABLE salary_deduct (
 	deduct_date	date,
 	deduct_type_code	char(8),
 	deduction_amount	decimal(18),
-	PRIMARY KEY (emp_code deduct_date deduct_type_code)
+	PRIMARY KEY (emp_code, deduct_date, deduct_type_code)
 );
 
 COMMENT ON TABLE salary_deduct IS '給与控除';
@@ -2619,12 +2619,12 @@ CREATE TABLE pay_slip (
 	late_night_hours	decimal(5,2),
 	shift_work_count	decimal(2),
 	overtime_allowance	decimal(18),
-	late_night_hours	decimal(5,2),
+	late_night_allowance	decimal(5,2),
 	shift_work_allowance	decimal(18),
 	paid_vacation_days	decimal(5,2),
 	special_leave_days	decimal(5,2),
 	absent_days	decimal(5,2),
-	late_early_counts	decimal(2),
+	late_early_count	decimal(2),
 	late_early_hours	decimal(5,2),
 	salary_cut_amount	decimal(18),
 	payment_tatal_amount	decimal(18),
@@ -2642,7 +2642,7 @@ CREATE TABLE pay_slip (
 	loan_repayment_amount	decimal(18),
 	loan_interest	decimal(18),
 	net_payment_amount	decimal(18),
-	PRIMARY KEY (emp_code salary_type_code payment_date)
+	PRIMARY KEY (emp_code, salary_type_code, payment_date)
 );
 
 COMMENT ON TABLE pay_slip IS '給与明細';
@@ -2664,12 +2664,12 @@ COMMENT ON COLUMN pay_slip.overtime_hours IS '所定外時間数';
 COMMENT ON COLUMN pay_slip.late_night_hours IS '深夜時間数';
 COMMENT ON COLUMN pay_slip.shift_work_count IS '交替勤務回数';
 COMMENT ON COLUMN pay_slip.overtime_allowance IS '所定外勤務手当';
-COMMENT ON COLUMN pay_slip.late_night_hours IS '深夜時間数';
+COMMENT ON COLUMN pay_slip.late_night_allowance IS '深夜時間手当';
 COMMENT ON COLUMN pay_slip.shift_work_allowance IS '交替勤務手当';
 COMMENT ON COLUMN pay_slip.paid_vacation_days IS '有給休暇日数';
 COMMENT ON COLUMN pay_slip.special_leave_days IS '特別休暇日数';
 COMMENT ON COLUMN pay_slip.absent_days IS '欠勤日数';
-COMMENT ON COLUMN pay_slip.late_early_counts IS '遅刻・早退回数';
+COMMENT ON COLUMN pay_slip.late_early_count IS '遅刻・早退回数';
 COMMENT ON COLUMN pay_slip.late_early_hours IS '遅刻・早退時間数';
 COMMENT ON COLUMN pay_slip.salary_cut_amount IS '給与カット額';
 COMMENT ON COLUMN pay_slip.payment_tatal_amount IS '支給総額';
@@ -2857,7 +2857,7 @@ CREATE TABLE account_balance (
 	credit_amount	decimal(18),
 	next_debit_carryover_balance	decimal(18),
 	next_credit_carryover_balance	decimal(18),
-	PRIMARY KEY (account_code year_month)
+	PRIMARY KEY (account_code, year_month)
 );
 
 COMMENT ON TABLE account_balance IS '科目残高';
@@ -2890,7 +2890,7 @@ CREATE TABLE expense_account (
 	cost_difference	decimal(18),
 	budget_unit_price	decimal(18),
 	accept_amount	decimal(18),
-	PRIMARY KEY (expense_incurred_date expense_account_class_code order_number)
+	PRIMARY KEY (expense_incurred_date, expense_account_class_code, order_number)
 );
 
 COMMENT ON TABLE expense_account IS '費用勘定';
@@ -2948,7 +2948,7 @@ CREATE TABLE budget_mgmt (
 	account_code	char(8),
 	planned_amount	decimal(18),
 	result_amount	decimal(18),
-	PRIMARY KEY (budget_year_month dept_code account_code)
+	PRIMARY KEY (budget_year_month, dept_code, account_code)
 );
 
 COMMENT ON TABLE budget_mgmt IS '予算管理';
@@ -2984,7 +2984,7 @@ CREATE TABLE dept_direct_labor_cost (
 	cost_incurre_year_month	char(6),
 	dept_code	char(8),
 	direct_labor_cost	decimal(18),
-	PRIMARY KEY (cost_incurre_year_month dept_code)
+	PRIMARY KEY (cost_incurre_year_month, dept_code)
 );
 
 COMMENT ON TABLE dept_direct_labor_cost IS '部門別直接労務費';
@@ -3162,7 +3162,7 @@ CREATE TABLE proc_cost (
 	failed_proc_cost	decimal(18),
 	failed_cost_difference	decimal(18),
 	by_product_amount	decimal(18),
-	PRIMARY KEY (planned_year_month product_code proc_seq_number)
+	PRIMARY KEY (planned_year_month, product_code, proc_seq_number)
 );
 
 COMMENT ON TABLE proc_cost IS '工程原価';
@@ -3212,7 +3212,7 @@ CREATE TABLE proc_cost_inv_eval (
 	proc_seq_number	decimal(4),
 	final_proc_grade_code	char(8),
 	grade_quantity	decimal(18),
-	PRIMARY KEY (planned_year_month product_code proc_seq_number)
+	PRIMARY KEY (planned_year_month, product_code, proc_seq_number)
 );
 
 COMMENT ON TABLE proc_cost_inv_eval IS '工程原価棚卸評価';
@@ -3228,7 +3228,7 @@ CREATE TABLE m_graded_cost_factor (
 	material_cost_equiv_factor	decimal(5,2),
 	cost_equiv_factor	decimal(5,2),
 	proc_cost_equiv_factor	decimal(5,2),
-	PRIMARY KEY (product_code grade_code)
+	PRIMARY KEY (product_code, grade_code)
 );
 
 COMMENT ON TABLE m_graded_cost_factor IS '等価係数マスタ';
@@ -3256,7 +3256,7 @@ CREATE TABLE product_cost (
 	wip_expense	decimal(18),
 	wip_proc_cost	decimal(18),
 	wip_cost_difference	decimal(18),
-	PRIMARY KEY (planned_year_month product_code grade_code)
+	PRIMARY KEY (planned_year_month, product_code, grade_code)
 );
 
 COMMENT ON TABLE product_cost IS '製品原価';
@@ -3292,7 +3292,7 @@ CREATE TABLE total_by_customer (
 	production_marginal_profit	decimal(18),
 	number_of_orders	decimal(18),
 	number_of_sales	decimal(18),
-	PRIMARY KEY (customer_code target_year)
+	PRIMARY KEY (customer_code, target_year)
 );
 
 COMMENT ON TABLE total_by_customer IS '得意先累計';
@@ -3324,7 +3324,7 @@ CREATE TABLE total_by_product (
 	production_marginal_profit	decimal(18),
 	number_of_orders	decimal(18),
 	number_of_sales	decimal(18),
-	PRIMARY KEY (product_code target_year)
+	PRIMARY KEY (product_code, target_year)
 );
 
 COMMENT ON TABLE total_by_product IS '製品累計';
@@ -3361,7 +3361,7 @@ CREATE TABLE fund_mgmt (
 	cash_flow_item_code	char(8),
 	result_amount	decimal(18),
 	planned_amount	decimal(18),
-	PRIMARY KEY (planned_year_month cash_flow_item_code)
+	PRIMARY KEY (planned_year_month, cash_flow_item_code)
 );
 
 COMMENT ON TABLE fund_mgmt IS '資金管理';
@@ -3386,7 +3386,7 @@ CREATE TABLE analysis_elem (
 	calc_year	char(4),
 	elem_calc_code	char(8),
 	analysis_elem_value	decimal(18),
-	PRIMARY KEY (calc_year elem_calc_code)
+	PRIMARY KEY (calc_year, elem_calc_code)
 );
 
 COMMENT ON TABLE analysis_elem IS '分析要素';
@@ -3461,7 +3461,7 @@ CREATE TABLE comp_eval (
 	comp_raito_code	char(8),
 	eval_raito_code	char(8),
 	comp_eval_raito	decimal(5,2),
-	PRIMARY KEY (calc_year comp_raito_code eval_raito_code)
+	PRIMARY KEY (calc_year, comp_raito_code, eval_raito_code)
 );
 
 COMMENT ON TABLE comp_eval IS '構成評価';
@@ -3496,7 +3496,7 @@ CREATE TABLE m_dept (
 	dept_code	char(8),
 	dept_name	varchar(64),
 	agg_dept_code	char(8),
-	expense_ calc_area	char(8),
+	expense_calc_area	char(8),
 	dept_headcount	decimal(8),
 	occupied_area	decimal(8),
 	PRIMARY KEY (dept_code)
@@ -3506,7 +3506,7 @@ COMMENT ON TABLE m_dept IS '部門マスタ';
 COMMENT ON COLUMN m_dept.dept_code IS '部門コード';
 COMMENT ON COLUMN m_dept.dept_name IS '部門名';
 COMMENT ON COLUMN m_dept.agg_dept_code IS '集約部門コード';
-COMMENT ON COLUMN m_dept.expense_ calc_area IS '費用計算領域';
+COMMENT ON COLUMN m_dept.expense_calc_area IS '費用計算領域';
 COMMENT ON COLUMN m_dept.dept_headcount IS '部門人数';
 COMMENT ON COLUMN m_dept.occupied_area IS '占有面積';
 
@@ -3660,7 +3660,7 @@ CREATE TABLE external_career (
 	previous_employment	varchar(64),
 	industry	varchar(64),
 	date_of_emplyment	date,
-	Length of Employment	decimal(8),
+	length_of_employment	decimal(8),
 	position_title	varchar(64),
 	job_detail	varchar(256),
 	PRIMARY KEY (external_career_number)
@@ -3672,7 +3672,7 @@ COMMENT ON COLUMN external_career.emp_code IS '従業員コード';
 COMMENT ON COLUMN external_career.previous_employment IS '入社前勤務先';
 COMMENT ON COLUMN external_career.industry IS '業種';
 COMMENT ON COLUMN external_career.date_of_emplyment IS '入社日';
-COMMENT ON COLUMN external_career.Length of Employment IS '在籍期間';
+COMMENT ON COLUMN external_career.length_of_employment IS '在籍期間';
 COMMENT ON COLUMN external_career.position_title IS '役席・職位';
 COMMENT ON COLUMN external_career.job_detail IS '職務内容';
 
@@ -3756,7 +3756,7 @@ CREATE TABLE salary (
 	annual_salary	decimal(18),
 	retirement_allowance_amount	decimal(18),
 	increase_amount	decimal(18),
-	PRIMARY KEY (emp_code change_date)
+	PRIMARY KEY (emp_code, change_date)
 );
 
 COMMENT ON TABLE salary IS '給与';
@@ -3776,7 +3776,7 @@ CREATE TABLE performance_appraisal (
 	eval_rank	varchar(64),
 	eval_detail	varchar(256),
 	evaluator_code	char(8),
-	PRIMARY KEY (emp_code eval_date)
+	PRIMARY KEY (emp_code, eval_date)
 );
 
 COMMENT ON TABLE performance_appraisal IS '考課査定';
@@ -3793,7 +3793,7 @@ CREATE TABLE social_insurance (
 	standard_monthly_remuneration	decimal(18),
 	first_resident_tax_amount	decimal(18),
 	resident_tax_amount	decimal(18),
-	PRIMARY KEY (emp_code change_date)
+	PRIMARY KEY (emp_code, change_date)
 );
 
 COMMENT ON TABLE social_insurance IS '社会保険';
@@ -3808,7 +3808,7 @@ CREATE TABLE health_status (
 	emp_code	char(8),
 	inspect_date	date,
 	regular_health_check_result	varchar(256),
-	PRIMARY KEY (emp_code inspect_date)
+	PRIMARY KEY (emp_code, inspect_date)
 );
 
 COMMENT ON TABLE health_status IS '健康状況';
@@ -3821,7 +3821,7 @@ CREATE TABLE suspension_from_office (
 	start_date	date,
 	end_date	date,
 	reason_for_leave	varchar(256),
-	PRIMARY KEY (emp_code start_date)
+	PRIMARY KEY (emp_code, start_date)
 );
 
 COMMENT ON TABLE suspension_from_office IS '休職';
@@ -3835,7 +3835,7 @@ CREATE TABLE paid_holiday (
 	target_year	char(4),
 	beginning_holiday_count	decimal(4,1),
 	used_holiday_count	decimal(4,1),
-	PRIMARY KEY (emp_code target_year)
+	PRIMARY KEY (emp_code, target_year)
 );
 
 COMMENT ON TABLE paid_holiday IS '有給休暇';
@@ -3884,7 +3884,7 @@ CREATE TABLE address (
 	phone_number	varchar(16),
 	emergency_contact	varchar(64),
 	emergency_contact_number	varchar(16),
-	PRIMARY KEY (emp_code change_date)
+	PRIMARY KEY (emp_code, change_date)
 );
 
 COMMENT ON TABLE address IS '住所';
@@ -3904,7 +3904,7 @@ CREATE TABLE commuting_route (
 	start_station	varchar(64),
 	end_station	varchar(64),
 	pass_price	decimal(18),
-	PRIMARY KEY (emp_code change_date)
+	PRIMARY KEY (emp_code, change_date)
 );
 
 COMMENT ON TABLE commuting_route IS '通勤経路';
@@ -3937,7 +3937,7 @@ CREATE TABLE family_status (
 	dependent_status	char(8),
 	separate_flag	char(1),
 	job_school_name	varchar(64),
-	PRIMARY KEY (emp_code change_date line_number)
+	PRIMARY KEY (emp_code, change_date, line_number)
 );
 
 COMMENT ON TABLE family_status IS '家族状況';
