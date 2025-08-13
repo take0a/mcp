@@ -27,3 +27,5 @@ Installed 2 packages in 41ms
 - MS の Python 拡張をインストールする
 - tblspec を workspace に登録する
 - 右下の Python のバージョンを選んで、上の venv のものに変える
+
+- Ruff 拡張もインストールする
